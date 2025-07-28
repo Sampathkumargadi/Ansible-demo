@@ -10,3 +10,5 @@
   environment:
     AWS_ACCESS_KEY_ID: "{{ec2_access_key}}"
     AWS_secret_Key_ID: "{{ec2_secret_key}}"
+    Tags:
+      name: testvm1 
