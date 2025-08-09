@@ -1,10 +1,14 @@
 ---
-- name: Start an EC2 instance
-  amazon.aws.ec2_instance:
+- hosts: localhost
+  connection: local
+  tasks:
+  - name: Start an EC2 instance
+    amazon.aws.ec2_instance: 
+    name: ansible-test-instance
     key_name: "AWS-key-new"
     instance_type: "t2.micro"
     region: "us-east-1"
-    image: "ami-04b70fa74e45c3917"
+    image: "ami-08e313580b7dba0a6"
     count: 1
     wait: yes
   environment:
