@@ -1,0 +1,22 @@
+---
+- name: Distribute SSH key to target servers
+  hosts: all
+  become: yes
+  tasks:
+    - name: Ensure the .ssh directory exists
+      file:
+        path: "/home/{{ ec2-user }}/.ssh"
+        state: directory
+        mode: '0700'
+        owner: "{{ ec2-user }}"
+        group: "{{ ec2-user }}"
+    
+    - name: Copy public key to target server
+      copy:
+        src: "/home/{{ ec2-user }}/.ssh/id_rsa.pub"
+        dest: "/home/{{ ec2-user }}/.ssh/authorized_keys"
+        mode: '0600'
+        owner: "{{ ec2-user }}"
+        group: "{{ ec2-user }}"
+      when: ansible_ssh_private_key_file is defined
+

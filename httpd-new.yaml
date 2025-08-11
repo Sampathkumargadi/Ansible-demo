@@ -1,0 +1,21 @@
+---
+- name: install apache and httpd
+  hosts: dbservers
+  become: true
+  become_user: root
+  tasks:
+    - name: install apache httpd
+      yum:
+        name: httpd
+        state: present  
+    - name: copy index.html file
+      copy:
+        src: /etc/ansible/index.html
+        dest: /var/www/html/index.html
+        owner: root  
+        group: root
+        mode: '0644'
+    - name: restart httpd
+      service:
+        name: httpd
+        state: restarted

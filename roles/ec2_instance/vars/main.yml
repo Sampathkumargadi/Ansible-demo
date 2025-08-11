@@ -1,0 +1,5 @@
+---
+# vars file for ec2_instance
+ec2_key_name: "AWS-key-new"
+ec2_security_group: "default"
+aws_region: "{{ region }}"

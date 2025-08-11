@@ -1,0 +1,10 @@
+# playbook.yml
+---
+- name: Create EC2 Instance
+  hosts: localhost
+  collections: local
+  gather_facts: false
+  vars_files:
+    - vaults/secrets.yml
+  roles:
+    - ec2_instance

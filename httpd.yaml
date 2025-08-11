@@ -1,0 +1,43 @@
+---
+- name: install wget unzip apache2
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+  - name: install wget unzip httpd
+    yum:
+      name:
+        - wget
+        - unzip
+        - httpd
+  - name: start apache2
+    service:
+      name: httpd
+      state: started
+      enabled: yes
+  - name: create folder /tmp
+    file:
+      path: /tmp/webfiles
+      state: directory
+  - name: download apache web files
+    get_url:
+      url: https://www.tooplate.com/zip-templates/2130_waso_strategy.zip
+      dest: /tmp/webfiles
+  - name: unzip the web files
+    unarchive:
+      src: /tmp/webfiles/2130_waso_strategy.zip
+      dest: /tmp/webfiles
+      remote_src: yes
+  - name: copy web files
+    copy:
+      src: /tmp/webfiles/2130_waso_strategy
+      dest: /var/www/html/
+      remote_src: yes 
+  - name: restart httpd
+    service:
+      name: httpd
+      state: restarted
+  - name: remove  files
+    file:
+      path: /tmp/webfiles
+      state: absent
