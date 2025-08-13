@@ -1,18 +1,26 @@
 ---
 - hosts: localhost
   connection: local
+  gather_facts: no
+
+  vars:
+    ec2_access_key:   
+    ec2_secret_key: 
+
   tasks:
-  - name: Start an EC2 instance
-    amazon.aws.ec2_instance: 
-    name: ansible-test-instance
-    key_name: "AWS-key-new"
-    instance_type: "t2.micro"
-    region: "us-east-1"
-    image: "ami-08e313580b7dba0a6"
-    count: 1
-    wait: yes
-  environment:
-    AWS_ACCESS_KEY_ID: "{{ec2_access_key}}"
-    AWS_secret_Key_ID: "{{ec2_secret_key}}"
-    Tags:
-      name: testvm1 
+    - name: Start an EC2 instance
+      amazon.aws.ec2_instance:
+        name: ansible-test-instance
+        instance_type: t2.medium
+        region: us-east-1
+        image_id: ami-0e1989e836322f58b
+        count: 1
+        wait: yes
+        #subnet_id: subnet-0e770506fd8fab563
+        security_group: default
+        tags:
+          Name: testvm1
+      environment:
+        AWS_ACCESS_KEY_ID: "{{ ec2_access_key }}"
+        AWS_SECRET_ACCESS_KEY: "{{ ec2_secret_key }}"
+        AWS_SECRET_ACCESS_KEY: "{{ ec2_secret_key }}"
